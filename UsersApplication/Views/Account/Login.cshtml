@@ -1,31 +1,27 @@
 ﻿@model UsersApplication.Models.LoginModel
 
 @{
-    ViewBag.Title = "Войти на сайт";
+    ViewBag.Title = "Login";
 }
 
-<div class="container">
-    <div class="login-form">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+<h2>Вход на сайт</h2>
 
-            <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
 
-            <h2 class="form-signin-heading">Вход на сайт</h2>
-            <hr />
-            @Html.ValidationSummary()
-            @Html.LabelFor(m => m.Login)
-            @Html.TextBoxFor(m => m.Login, new { @class = "form-control" })<br />
-            @Html.LabelFor(m => m.Password)
-            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @type = "password" })<br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
     <div>
-        @Html.ActionLink("Регистрация", "Register")<span> | </span>@Html.ActionLink("Забыли пароль?", "Register")<br />
+        @Html.ValidationSummary()
+        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+        <p>
+            <label>Логин</label><br />
+            @Html.EditorFor(m => m.Login)
+        </p>
+        <p>
+            <label>Пароль</label><br />
+            @Html.EditorFor(m => m.Password)
+        </p>
+        <p><button type="submit">Войти</button></p>
     </div>
-
-            <button type="submit" class="btn btn-success">Войти</button>
-        }
-    </div>
-
-</div>
+}
