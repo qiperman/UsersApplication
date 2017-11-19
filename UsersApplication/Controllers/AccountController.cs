@@ -56,8 +56,7 @@ namespace UsersApplication.Controllers
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
-                    SendConfirmEmail(user.Id);
+                    await SendConfirmEmail(user.Id);
                     return RedirectToAction("Login", "Account");
                 }
                 else
@@ -230,5 +229,76 @@ namespace UsersApplication.Controllers
             return RedirectToAction("Index", "Account");
 
         }
+
+        [HttpGet]
+        public ActionResult ResetPassword(string userId, string code)
+        {
+            ViewBag.userId = userId;
+            ViewBag.code = code;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ResetPassword(ResetPasswordModel model, string userId, string code)
+        {
+            var provider = new DpapiDataProtectionProvider("Sample");
+
+            var userManager = new UserManager<MyUser>(new UserStore<MyUser>());
+
+            UserManager.UserTokenProvider = new DataProtectorTokenProvider<MyUser>(
+                provider.Create("ResetPassword"));
+
+            IdentityResult result = await UserManager.ResetPasswordAsync(userId, code, model.Password );
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Что-то пошло не так");
+            }
+
+            return RedirectToAction("Index", "Account");
+        }
+
+        public ActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                {
+                    return View("ForgotPassword");
+                }
+                var provider = new DpapiDataProtectionProvider("Sample");
+
+                var userManager = new UserManager<MyUser>(new UserStore<MyUser>());
+
+                UserManager.UserTokenProvider = new DataProtectorTokenProvider<MyUser>(
+                    provider.Create("ResetPassword"));
+
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account",
+                    new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Сброс пароля",
+                    "Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+            }
+            return View(model);
+        }
+
+        
 	}
 }

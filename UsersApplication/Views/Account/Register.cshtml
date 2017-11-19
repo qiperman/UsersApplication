@@ -19,13 +19,13 @@
             @Html.ValidationSummary()          
             
             @Html.LabelFor(model => model.Email)
-            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })<br />
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "email" })<br />
             @Html.LabelFor(model => model.Login)
             @Html.TextBoxFor(model => model.Login, new { @class = "form-control" })<br />
             @Html.LabelFor(model => model.Password)
-            @Html.TextBoxFor(model => model.Password, new { @class = "form-control" })<br />
+            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @type = "password" })<br />
             @Html.LabelFor(model => model.PasswordConfirm)
-            @Html.TextBoxFor(model => model.PasswordConfirm, new { @class = "form-control" })<br />
+            @Html.TextBoxFor(model => model.PasswordConfirm, new { @class = "form-control" , @type = "password"})<br />
 
             <button type="submit" class="btn btn-success">Регистрация</button>
         }

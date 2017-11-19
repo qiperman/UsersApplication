@@ -40,11 +40,11 @@ public class EmailService : IIdentityMessageService
     public Task SendAsync(IdentityMessage message)
     {
         // настройка логина, пароля отправителя
-        var from = "iw1v4n@yandex.ru";
+        var from = "iw1v4n@mail.ru";
         var pass = "654321Qwerty";
 
         // адрес и порт smtp-сервера, с которого мы и будем отправлять письмо
-        SmtpClient client = new SmtpClient("smtp.yandex.ru", 25);
+        SmtpClient client = new SmtpClient("smtp.mail.ru", 25);
 
         client.DeliveryMethod = SmtpDeliveryMethod.Network;
         client.UseDefaultCredentials = false;

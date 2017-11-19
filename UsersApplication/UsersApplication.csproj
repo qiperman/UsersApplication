@@ -153,9 +153,11 @@
     </Compile>
     <Compile Include="Models\AppContext.cs" />
     <Compile Include="Models\EditModel.cs" />
+    <Compile Include="Models\ForgotPasswordModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MyUser.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\UsersApplicationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -203,6 +205,9 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\SendConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
