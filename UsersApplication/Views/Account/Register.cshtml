@@ -1,53 +1,39 @@
 ﻿@model UsersApplication.Models.RegisterModel
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Регистрация";
 }
 
-<h2>Регистрация</h2>
 
+<div class="container">
+    <div class="login-form">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+            <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
 
-    <div>
-        <h4>Регистрация пользователя</h4>
-        <hr />
-        @Html.ValidationSummary(false)
+            <h2 class="form-signin-heading">Регистрация пользователя</h2>
+            <hr />
+            
+            @Html.ValidationSummary()          
+            
+            @Html.LabelFor(model => model.Email)
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })<br />
+            @Html.LabelFor(model => model.Login)
+            @Html.TextBoxFor(model => model.Login, new { @class = "form-control" })<br />
+            @Html.LabelFor(model => model.Password)
+            @Html.TextBoxFor(model => model.Password, new { @class = "form-control" })<br />
+            @Html.LabelFor(model => model.PasswordConfirm)
+            @Html.TextBoxFor(model => model.PasswordConfirm, new { @class = "form-control" })<br />
 
-        <div>
-            Электронный адрес
-            <div>
-                @Html.EditorFor(model => model.Email)
-            </div>
-        </div>
-
-        <div>
-            Логин
-            <div>
-                @Html.EditorFor(model => model.Login)
-            </div>
-        </div>
-
-        <div>
-            Пароль
-            <div>
-                @Html.EditorFor(model => model.Password)
-            </div>
-        </div>
-
-        <div>
-            Подтвердить пароль
-            <div>
-                @Html.EditorFor(model => model.PasswordConfirm)
-            </div>
-        </div>
-
-        <div>
-            <div>
-                <input type="submit" value="Зарегистрировать" />
-            </div>
-        </div>
+            <button type="submit" class="btn btn-success">Регистрация</button>
+        }
     </div>
-}
+
+</div>
+
+
+
+
+

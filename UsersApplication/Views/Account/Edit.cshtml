@@ -1,0 +1,93 @@
+﻿@model UsersApplication.Models.EditModel
+
+@{
+    ViewBag.Title = "Редактирование";
+}
+
+<div class="container">
+    <div class="login-form">
+        <h2>Редактировать данные профиля</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div>
+                @Html.ValidationSummary(true, "")
+                <div>
+                    <p>Имя: @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })</p>
+                    <p>Фамилия: @Html.TextBoxFor(model => model.SecondName, new { @class = "form-control" })</p>
+                    <p>Отчество: @Html.TextBoxFor(model => model.Patronymic, new { @class = "form-control" })</p>
+                    
+                </div>
+
+                @if (Model.EmailConfirmed == true)
+                {
+
+                    <div class="alert alert-success">
+                        Ваш email подтвержден!
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger">
+                        Подтвердите свой email. @Html.ActionLink("Выслать письмо подтверждения", "SendConfirmEmail", new { userid = Model.UserId })
+                    </div>
+                }
+                <div>
+                <p>Email: @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })</p>
+
+                    <div>
+                        <input type="submit" class="btn btn-success" value="Сохранить" />
+                    </div>
+                </div>
+
+
+            </div>
+        }
+
+
+        <style>
+            #main {
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            #okno {
+                width: 300px;
+                height: 50px;
+                text-align: center;
+                padding: 15px;
+                border: 3px solid #0000cc;
+                border-radius: 10px;
+                color: #0000cc;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                margin: auto;
+            }
+
+            #main:target {
+                display: block;
+            }
+        </style>
+
+        <a href="#" id="main">
+            <form method="post" action="Delete">
+                <div id="okno">
+                    Удалить аккаунт?</br>
+                    <button type="submit">Да</button>
+                </div>
+
+            </form>
+        </a>
+
+        <a href="#main" class="btn-danger">Удалить аккаунт</a>
+</div>
+</div>
