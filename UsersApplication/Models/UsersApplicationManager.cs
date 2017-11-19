@@ -19,6 +19,11 @@ namespace UsersApplication.Models
         {
             AppContext db = context.Get<AppContext>();
             UsersApplicationManager manager = new UsersApplicationManager(new UserStore<MyUser>(db));
+            manager.UserValidator = new UserValidator<MyUser>(manager)
+            {
+                AllowOnlyAlphanumericUserNames = false,
+                RequireUniqueEmail = true 
+            };
             return manager;
         }
     }

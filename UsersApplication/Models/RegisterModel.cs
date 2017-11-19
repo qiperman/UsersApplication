@@ -10,6 +10,7 @@ namespace UsersApplication.Models
     {
             [Required]
             [DataType(DataType.EmailAddress)]
+            [Key]
             public string Email { get; set; }
 
             [Required]

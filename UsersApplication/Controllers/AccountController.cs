@@ -82,6 +82,7 @@ namespace UsersApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model, string returnUrl)
         {
+
             if (ModelState.IsValid)
             {
                 MyUser user = await UserManager.FindAsync(model.Login, model.Password);
@@ -92,6 +93,7 @@ namespace UsersApplication.Controllers
                 else
                 {
                     ClaimsIdentity claim = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+
                     AuthenticationManager.SignOut();
                     AuthenticationManager.SignIn(new AuthenticationProperties
                     {
